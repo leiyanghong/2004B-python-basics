@@ -65,11 +65,26 @@ def search(d):
 
 def lis(l):
     s = []
-    for i in l:  # X
+    # 遍历传入的参数,拿到每一个值
+    for i in l:
+        # 判断每个值是否为空 是否为None
         if i == '' or i is None:
+            # 满足就通过,不打印
             pass
         else:
+            # 反之就追加到s数组里
             s.append(i)
+    # 返回处理之后追加的s数组
     return s
 l = lis(['','hello',None,'python'])
 print(l)
+
+'''
+4、编写一个计算一个元祖中所有数据和的方法，并把计算结果返回
+'''
+def sum_tuple(tu):
+    sum = 0
+    for i in tu:
+        sum += i
+    return sum
+print(sum_tuple(tu = (1,2,3,4,5,6,7,8)))
