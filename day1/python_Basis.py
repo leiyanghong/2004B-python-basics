@@ -26,7 +26,7 @@ def statistical_characters():
             dic['其它符号'] += 1
     # 打印最终的数据
     print(dic)
-
+statistical_characters()
 
 '''
 编程小练习之完数
