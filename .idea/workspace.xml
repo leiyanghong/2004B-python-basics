@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d523aac-e75c-4a85-8cbc-d685d4a21c2f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/day1/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/day2/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/day2/class_demo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/day1/python_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python_Basis.py" beforeDir="false" afterPath="$PROJECT_DIR$/day1/python_Basis.py" afterDir="false" />
-    </list>
+    <list default="true" id="4d523aac-e75c-4a85-8cbc-d685d4a21c2f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,11 +60,6 @@
             <path>
               <item name="2004B-python-basics" type="b2602c69:ProjectViewProjectNode" />
               <item name="2004B-python-basics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2004B-python-basics" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2004B-python-basics" type="462c0819:PsiDirectoryNode" />
-              <item name="day2" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -188,23 +176,22 @@
       <option name="presentableId" value="Default" />
       <updated>1587741402419</updated>
       <workItem from="1587741403625" duration="7655000" />
-      <workItem from="1587821709891" duration="2462000" />
+      <workItem from="1587821709891" duration="2541000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10117000" />
+    <option name="totallyTimeSpent" value="10196000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="768" y="97" width="1750" height="970" extended-state="0" />
-    <editor active="true" />
+    <frame x="162" y="74" width="1750" height="970" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25266272" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25266272" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32894737" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32894737" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39952153" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -213,7 +200,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32894737" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32894737" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
