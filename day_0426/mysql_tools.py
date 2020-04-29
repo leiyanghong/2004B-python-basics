@@ -63,15 +63,15 @@ class MysqlDb(object):
         try:
             self.cursor.execute(sqlquery)
             print("执行成功 insert语句:'%s'" % sqlquery)
-
+            return list(self.cursor.fetchall())  # 如果返回多行情况下,用 fetchall()
         except Exception as abnormal:
             print("SQL有误，错误内容 %s" % abnormal)
-        if self.cursor.rowcount == 0:  # 判断 返回的sql数据行数如果为0则代表没有查询结果
-            return "没有查询的结果.."
-        elif self.cursor.rowcount == 1:  # 判断 返回的sql数据如果只有1条数据 返回该数据以list形式返回
-            return list(self.cursor.fetchone())
-        else:
-            return list(self.cursor.fetchall())  # 如果返回多行情况下,用 fetchall()
+        # if self.cursor.rowcount == 0:  # 判断 返回的sql数据行数如果为0则代表没有查询结果
+        #     return "没有查询的结果.."
+        # elif self.cursor.rowcount == 1:  # 判断 返回的sql数据如果只有1条数据 返回该数据以list形式返回
+        #     return list(self.cursor.fetchone())
+        # else:
+        #     return list(self.cursor.fetchall())  # 如果返回多行情况下,用 fetchall()
 
     # 修改sql
     def update_sql(self, sql):
@@ -119,12 +119,12 @@ class MysqlDb(object):
         self.condb.close()  # 关闭数据库
 
     def insert_sql(self, tablename, **field):
-        listvalues = []  # values字段对应值的集合
-        liststr = ""  # 声明一个空字符串用来做字符串拼接处理
-        for key in field:
-            liststr = liststr + "%s," % key
-        # 根据liststr[0:-1] 去除最后的",",最后进行字符串拼接
-        listfield = "(" + liststr[0:-1] + ")"
+        # liststr = ""  # 声明一个空字符串用来做字符串拼接处理
+        # for key in field:
+        #     liststr = liststr + "%s," % key
+        # # 根据liststr[0:-1] 去除最后的",",最后进行字符串拼接
+        # listfield = "(" + liststr[0:-1] + ")"
+        listfield = "(" + ','.join(str(d) for d in field.keys()) + ")"
         values = tuple(field.values())
         # sql语句
         insertsql = "INSERT INTO %s%s VALUES %s" % (tablename, listfield, values)
