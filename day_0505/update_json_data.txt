@@ -1,0 +1,3 @@
+{'NAME': 'xuepl', 'AGE': 18, 'SEX': '男'}
+{'NAME': 'xuepl', 'AGE': 18, 'SEX': '男'}
+{'NAME': 'xuepl', 'AGE': 18, 'SEX': '男'}
