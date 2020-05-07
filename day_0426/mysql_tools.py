@@ -37,45 +37,41 @@ class MysqlDb(object):
         self.cursor.execute(sql)
 
     # 创建表
-    def create_table(self, tablename, sql):
-        # 获取数据库连接 使用cursor() 方法创建一个游标对象 cursor
-        cursor = self.condb.cursor()
-        # 使用execute()方法执行sql ，如果表存在则删除
-        cursor.execute("drop table if exists %s" % (tablename))
-        # 使用预处理语句创建表
-        cursor.execute(sql)
+    def create_table(self, tablename, **field):
+        basesql = ""  # 定义basesql
+        # 判断表名为tablename表名是否存在，如果是 直接删除
+        self.cursor.execute("DROP TABLE IF EXISTS %s" % tablename)
+        # 将field，拼接basesql
+        for key in field:
+            basesql = basesql + "%s varchar(255) DEFAULT NULL COMMENT '%s'," % (key, field.get(key))
+        makesql = """
+              CREATE TABLE %s (
+        id int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+        %s
+        PRIMARY KEY (`id`)
+      )
+              """ % (tablename, basesql)
+        # 执行建表SQL
+        self.cursor.execute(makesql)
         print("表:'%s' 创建成功" % tablename)
 
-    # 增加sql
-    def insert_sql(self, sql):
-        # 获取数据库连接 使用cursor() 方法创建一个游标对象 cursor
-        cursor = self.condb.cursor()
-        # 使用execute()方法执行sql ，如果表存在则删除
-        # SQL 插入语句
 
-        try:
-            # 执行sql语句
-            cursor.execute(sql)
-            # 提交到数据库执行
-            self.condb.commit()
-        except Exception as abnormal:
-            # 如果发生错误则回滚
-            self.condb.rollback()
-            print("执行失败 insert语句:'%s'，失败信息为 %s" % (sql, abnormal))
-        print("新增数据成功")
+
 
     # 查询sql
-    def querysql(self, sqlquery):
+    def query_sql(self, sqlquery):
         try:
-            self.cursor.execute(sqlquery)  # 影响的行数
+            self.cursor.execute(sqlquery)
+            print("执行成功 insert语句:'%s'" % sqlquery)
+            return list(self.cursor.fetchall())  # 如果返回多行情况下,用 fetchall()
         except Exception as abnormal:
             print("SQL有误，错误内容 %s" % abnormal)
-        if self.cursor.rowcount == 0:  # 判断 返回的sql数据行数如果为0则代表没有查询结果
-            return "没有查询的结果.."
-        elif self.cursor.rowcount == 1:  # 判断 返回的sql数据如果只有1条数据 返回该数据以list形式返回
-            return list(self.cursor.fetchone())
-        else:
-            return list(self.cursor.fetchall())  # 如果返回多行情况下,用 fetchall()
+        # if self.cursor.rowcount == 0:  # 判断 返回的sql数据行数如果为0则代表没有查询结果
+        #     return "没有查询的结果.."
+        # elif self.cursor.rowcount == 1:  # 判断 返回的sql数据如果只有1条数据 返回该数据以list形式返回
+        #     return list(self.cursor.fetchone())
+        # else:
+        #     return list(self.cursor.fetchall())  # 如果返回多行情况下,用 fetchall()
 
     # 修改sql
     def update_sql(self, sql):
@@ -84,12 +80,16 @@ class MysqlDb(object):
         try:
             # 执行sql语句
             cursor.execute(sql)
+            print("更新成功,sql语句:{}".format(sql))
             # 提交到数据库执行
             self.condb.commit()
         except Exception as abnormal:
             self.condb.rollback()
             print("更新失败,sql语句:{}".format(sql))
             print("报错内容:{}".format(abnormal))
+        # 判断是否执行成功
+        if self.cursor.rowcount == 1:
+            print("执行成功 insert语句:'%s'" % sql)
 
     # 删除一条数据
     def deleteone(self, sql):
@@ -112,10 +112,31 @@ class MysqlDb(object):
         self.cursor.execute(sql)
         print("删除数据库成功")
 
+
     # 析构函数,对象实例化调用之后会执行del函数
     def __del__(self):
         self.cursor.close()  # 关闭游标
         self.condb.close()  # 关闭数据库
+
+    def insert_sql(self, tablename, **field):
+        # liststr = ""  # 声明一个空字符串用来做字符串拼接处理
+        # for key in field:
+        #     liststr = liststr + "%s," % key
+        # # 根据liststr[0:-1] 去除最后的",",最后进行字符串拼接
+        # listfield = "(" + liststr[0:-1] + ")"
+        listfield = "(" + ','.join(str(d) for d in field.keys()) + ")"
+        values = tuple(field.values())
+        # sql语句
+        insertsql = "INSERT INTO %s%s VALUES %s" % (tablename, listfield, values)
+        try:
+            self.cursor.execute(insertsql)  # 执行SQL
+            self.condb.commit()  # 提交到数据库执行
+        except Exception as abnormal:
+            self.condb.rollback()  # 发生错误的时候 回滚
+            print("执行失败 insert语句:'%s'，失败信息为 %s" % (insertsql, abnormal))
+        # 判断是否执行成功
+        if self.cursor.rowcount == 1:
+            print("执行成功 insert语句:'%s'" % insertsql)
 
 
 if __name__ == '__main__':
@@ -130,23 +151,15 @@ if __name__ == '__main__':
     PRIMARY KEY关键字用于定义列为主键。 您可以使用多列来定义主键，列间以逗号分隔。
     ENGINE 设置存储引擎，CHARSET 设置编码。
     '''
-    mysql.create_table(tablename='tb_leiyanghong', sql="""\
-                                                                CREATE TABLE IF NOT EXISTS `tb_leiyanghong`(
-                                                                `id` INT UNSIGNED AUTO_INCREMENT,
-                                                                `name` VARCHAR(100) NOT NULL,
-                                                                `age` VARCHAR(40) NOT NULL,
-                                                                PRIMARY KEY ( `id` ))
-                                                                ENGINE=InnoDB DEFAULT CHARSET=utf8;""")
+    # mysql.create_table(tablename='tb_leiyanghong',name='雷阳洪',age='18')
     # 在tb_leiyanghong表中 插入一条数据
-    mysql.insert_sql(sql="""INSERT INTO tb_leiyanghong
-                                          (name,age)
-                  VALUES                  ('leiyanghong{}','19');""".format(random.randint(1, 100000)))
-    # 查询表数据
-    sql = mysql.querysql("select * from tb_leiyanghong limit 10")
+    mysql.insert_sql(tablename='tb_leiyanghong',name='雷阳洪',age='18')
+    # # 查询表数据
+    sql = mysql.query_sql("select * from tb_leiyanghong limit 10")
     print('查询该表前10条数据:', sql)
-    # 修改表数据
+    # # 修改表数据
     updata_data = mysql.update_sql("update tb_leiyanghong set name='彭敏' where id ='1'")
-    query_updata_data2 = mysql.querysql("select * from tb_leiyanghong limit 10")
+    query_updata_data2 = mysql.query_sql("select * from tb_leiyanghong limit 10")
     print('查询修改之后的数据:', query_updata_data2)
     # 删除
     mysql.deleteone("DELETE FROM tb_leiyanghong WHERE name = '彭敏'")

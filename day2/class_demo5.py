@@ -37,5 +37,33 @@ class Chinese(Person):
         print('is walking...')
 
 
-c = Chinese('雷阳洪', "18岁", '会写python')
-print(c.name, c.age, c.language)
+# c = Chinese('雷阳洪', "18岁", '会写python')
+# print(c.name, c.age, c.language)
+
+dic = {'name':'雷阳洪','age':'18','sex':'男'}
+tablename = 'tb_leiyanghong'
+liststr = ""  # 声明一个空字符串用来做字符串拼接处理
+for key in dic:
+    liststr = liststr + "%s," % key
+# 根据liststr[0:-1] 去除最后的",",最后进行字符串拼接
+listfield = "(" + liststr[0:-1]+ ")"
+values = tuple(dic.values())
+# sql语句
+insertsql = "INSERT INTO %s%s VALUES %s" % (tablename, listfield, values)
+print(insertsql)
+
+
+
+
+# liststr = ""  # 字段的集合
+# listvalues = []  # values字段对应值的集合
+# for key in field:
+#     liststr = liststr + "%s," % key
+#     listvalues.append(field[key])
+#     i = i + 1
+# listfield = "(" + liststr[0:len(liststr) - 1] + ")"  # 最终的字段集合
+# values = tuple(listvalues)  # 最终的字段值集合
+
+
+
+
