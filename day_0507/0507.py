@@ -135,8 +135,11 @@
 # doo()
 
 # * 给装饰器传参
-
+import copy
 import time
 # 给类加装饰器
 # 语法糖执行逻辑 从里到外执行  调用函数执行逻辑 从外到里执行   分开理解语法糖 和 调用逻辑
 # property setter deleter   首先要定义(property)  然后才能setter deleter操作
+
+
+copy
