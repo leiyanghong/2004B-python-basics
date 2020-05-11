@@ -134,12 +134,220 @@
 # foo()
 # doo()
 
+
 # * 给装饰器传参
 import copy
 import time
+
+# # * 给装饰器传参
+# def fun_a(arg_a):
+#     def swap(func):
+#         def function(*args,**kwargs):
+#             print("接收到了装饰器传过来的参数",arg_a)
+#             print("函数执行前的操作")
+#             res = func(*args,**kwargs)
+#             print('函数执行后的操作')
+#             return res
+#         return function
+#     return swap
+#
+# @fun_a('arg_a')
+# def fun_b(arg_b):
+#     print(arg_b)
+# a = fun_b('执行fun_b函数')
+
+# def main(arg_a):
+#     print('是main方法')
+#     def swap(func):
+#         def child(*args,**kwargs):
+#             print("它打印前执行函数…",arg_a)
+#             res = func(*args,**kwargs)
+#             print("它打印后执行函数…")
+#             return res
+#         return child
+#     return swap
+#
+# @main("arg_a")
+# def alone(alone_a):
+#     print("我是alone方法...",alone_a)
+#
+# alone("传入alone参数,*args,**kwargs")
+
+# import time
+# from functools import wraps  # wraps能保留原有函数的名称和docstring
+#
+# def log_level(level="DEBUG"): # 该参数是装饰器里面的原函数的装饰器传入的参数,这里是写死的
+#     def log_format(func): # 该参数是原函数名
+#         @wraps(func)
+#         def format(*args,**kwargs): # 该参数对应的是原函数传入的参数
+#             logtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()) # 取得本地时间
+#             print("[{}]{}: ".format(level, logtime), end='') # 输出打印时间
+#             return func(*args,**kwargs) # 返回原函数的参数
+#         return format
+#     return log_format
+#
+#
+# @log_level()
+# def log_1(time):
+#     print("你好,欢迎来到雷阳洪python3装饰器学习课堂,现在本地时间是{}".format(time))
+#
+# log_1(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
+
+
+
 # 给类加装饰器
-# 语法糖执行逻辑 从里到外执行  调用函数执行逻辑 从外到里执行   分开理解语法糖 和 调用逻辑
+import time
+from functools import wraps
+# class Logger:
+#     def __init__(self,level='DEBUG'):
+#         self.level = level
+#     def __call__(self, func):
+#         @wraps(func)
+#         def log_format(*args, **kwargs):
+#             log_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+#             print("[{}]{}: ".format(self.level, log_time), end='')
+#             return func(*args, **kwargs)
+#         return log_format
+#
+# @Logger()
+# def log1(name):
+#     print("Hello,Welcome to Python...{}".format(name))
+#
+# @Logger('Error')
+# def log2():
+#     print("Python ...")
+#
+# log1("leiyanghong")
+# time.sleep(1)
+# log2()
+
+# # 装饰器装饰类
+# def f2(f_value):
+#     def f1(func):
+#         def function(*args, **kwargs):
+#             print(f_value)
+#             print('-----执行装饰器实现的功能-------')
+#             return func(*args, **kwargs)
+#         return function
+#     return f1
+# @f2("这是往装饰器里面传参的值")
+# class Hero(object):
+#     def __init__(self,name,age):
+#         self.name=name
+#         self.age=age
+#         print('正在初始化')
+#     def move(self):
+#         print('%s在快速移动'%self.name)
+#
+# laoli=Hero('老李',19)
+# print(laoli.name)
+
+
+# # 装饰器嵌套
+# def fun_a(func):
+#     print("装饰器fun_a")
+#     def function():
+#         res=func()
+#         return res
+#     return function
+# def fun_b(func):
+#     print("装饰器fun_b")
+#     def function():
+#         res=func()
+#         return res
+#     return function
+# def fun_c(func):
+#     print("装饰器fun_c")
+#     def function():
+#         res=func()
+#         return res
+#     return function
+#
+# @fun_a
+# @fun_b
+# @fun_c
+# def fun():
+#     print("执行fun函数")
+# fun()
+
 # property setter deleter   首先要定义(property)  然后才能setter deleter操作
 
 
-copy
+
+
+'''
+1、定义一个用户类，包含用户名，密码，手机号三个属性，无方法
+要求：使用@property装饰器实现对上述三个属性的修改检查（提示数据检查用正则表达式实现，正则表达式可以百度）
+用户名：长度6-8位的数字、字母
+密码：长度4-10位，必须包含字母和数字
+手机号：11位数字
+'''
+import re
+
+class User():
+    @property
+    def username(self):
+        return self.username
+    @username.setter  # 修改
+    def username(self,value):
+        if re.match("^[a-zA-Z0-9]{6,8}$", value):
+            print("用户名合法:{}".format(value))
+        else:
+            print("用户名不合法,错误用户名：长度6-8位的数字、字母")
+    @property
+    def pwd(self):
+        return self.pwd
+    @pwd.setter  # 修改
+    def pwd(self, value):
+        if re.match("^[a-zA-Z0-9]{4,10}$", value):
+            print("密码合法:{}".format(value))
+        else:
+            print("密码不合法,错误密码：长度4-10位，必须包含字母和数字,错误的密码为:{}".format(value))
+    @property
+    def phone(self):
+        return self.phone
+    @phone.setter  # 修改
+    def phone(self, value):
+        if re.match("1\d{10}", value):
+            print("手机号合法:{}".format(value))
+        else:
+            print("手机号不合法,必须满足11位数字,且首位为1的手机号.错误的手机号为:{}".format(value))
+user = User()
+user.username = "asA111"
+user.pwd = "asA111"
+user.phone = "13264673267"
+
+
+
+# 课堂作业
+# '''
+# 1、使用递归函数求100以内数的和
+# '''
+# def sum(max):
+#     if max ==1:
+#         return 1
+#     else:
+#         return max + sum(max-1)
+# print(sum(100))
+#
+# '''
+# 2、使用实现一个统计函数运行时间的装饰器
+# '''
+# import time
+#
+# def wrapper(func):
+#     def count_time(*args,**kwargs):
+#         start_time=time.time()
+#         func(*args,**kwargs)
+#         end_time = time.time()
+#         time1 = end_time-start_time
+#         return time1
+#     return count_time
+#
+# @wrapper
+# def wsaaccept():
+#     time.sleep(2)
+#
+# print(wsaaccept())
+
+
