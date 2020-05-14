@@ -44,7 +44,7 @@ class Test():
                 cls.instance = object.__new__(cls)  # 为空就创建一个对象,下次如果再次调用这个类__instance就不会创建对象了
             return cls.instance  # 返回给new函数
         cls.__new__ = new  # 将new的对象赋值给__new__,__new__方法是用来创建对象的
-        return cls  # 返回给调用者,cls就是传入的A类地址,将new出来的对象返回给原来的A类
+        return cls  # 返回给调用者,cls就是传入的A类地址,将new出来的对象返回给原来的A类,实现单例模式
 
 
 @Test("leiyh","18")
