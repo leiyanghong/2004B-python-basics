@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <script src="./info.js"></script>
+    <style>
+        div {
+            width: 160px;
+            height: 36px;
+            background-color: #f40;
+            line-height: 36px;
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+            margin: 30px auto;
+            cursor: pointer;
+            -webkit-user-select: none; /*禁止用户选中文字*/
+        }
+    </style>
+</head>
+<body>
+<form name="reg_testdate" action="http://localhost/signup" method="get">
+    <table border="1"> <!-- 定义表单属性-->
+        <tr> <!-- table_row-->
+            <td>账号邮箱</td>
+            <td>
+                <input type="text" name="mail"/>
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>昵称</td>
+            <td>
+                <input type="text" name="username"/>
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>密码</td>
+            <td>
+                <input type="password" name="password"/>
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>确认密码</td>
+            <td>
+                <input type="password" name="repassword"/>
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>性别</td>
+            <td>
+                <input name="radiobutton" type="radio" value=0 checked="checked"/>男<br/>
+                <input name="radiobutton" type="radio" value=1 checked="checked"/>女
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>生日</td>
+            <td>
+
+                <select name="YYYY" onchange="YYYYDD(this.value)">
+                    <option value="">请选择 年</option>
+                </select>
+                <select name="MM" onchange="MMDD(this.value)">
+                    <option value="">选择 月</option>
+                </select>
+                <select name="DD">
+                    <option value="">选择 日</option>
+                </select>
+                <script language="JavaScript"><!--
+                function YYYYMMDDstart() {
+                    MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+                    //先给年下拉框赋内容
+                    var y = new Date().getFullYear();
+                    for (var i = (y - 30); i < (y + 30); i++) //以今年为准，前30年，后30年
+                        document.reg_testdate.YYYY.options.add(new Option(" " + i + " 年", i));
+
+                    //赋月份的下拉框
+                    for (var i = 1; i < 13; i++)
+                        document.reg_testdate.MM.options.add(new Option(" " + i + " 月", i));
+
+                    document.reg_testdate.YYYY.value = y;
+                    document.reg_testdate.MM.value = new Date().getMonth() + 1;
+                    var n = MonHead[new Date().getMonth()];
+                    if (new Date().getMonth() == 1 && IsPinYear(YYYYvalue)) n++;
+                    writeDay(n); //赋日期下拉框Author:meizz
+                    document.reg_testdate.DD.value = new Date().getDate();
+                }
+
+                if (document.attachEvent)
+                    window.attachEvent("onload", YYYYMMDDstart);
+                else
+                    window.addEventListener('load', YYYYMMDDstart, false);
+
+                function YYYYDD(str) //年发生变化时日期发生变化(主要是判断闰平年)
+                {
+                    var MMvalue = document.reg_testdate.MM.options[document.reg_testdate.MM.selectedIndex].value;
+                    if (MMvalue == "") {
+                        var e = document.reg_testdate.DD;
+                        optionsClear(e);
+                        return;
+                    }
+                    var n = MonHead[MMvalue - 1];
+                    if (MMvalue == 2 && IsPinYear(str)) n++;
+                    writeDay(n)
+                }
+
+                function MMDD(str)   //月发生变化时日期联动
+                {
+                    var YYYYvalue = document.reg_testdate.YYYY.options[document.reg_testdate.YYYY.selectedIndex].value;
+                    if (YYYYvalue == "") {
+                        var e = document.reg_testdate.DD;
+                        optionsClear(e);
+                        return;
+                    }
+                    var n = MonHead[str - 1];
+                    if (str == 2 && IsPinYear(YYYYvalue)) n++;
+                    writeDay(n)
+                }
+
+                function writeDay(n)   //据条件写日期的下拉框
+                {
+                    var e = document.reg_testdate.DD;
+                    optionsClear(e);
+                    for (var i = 1; i < (n + 1); i++)
+                        e.options.add(new Option(" " + i + " 日", i));
+                }
+
+                function IsPinYear(year)//判断是否闰平年
+                {
+                    return (0 == year % 4 && (year % 100 != 0 || year % 400 == 0));
+                }
+
+                function optionsClear(e) {
+                    e.options.length = 1;
+                }
+
+                //--></script>
+
+
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>所在地</td>
+            <td>
+                <select name="province" id="guojia" οnchange="getCity()">
+                    <option value="">国家</option>
+                    <!-- 利用js把省份添加到下拉列表里-->
+                    <script type="text/javascript">
+                        for (var i = 0; i < provinceArr.length; i++) {
+                            document.write("<option value='" + i + "'>" + provinceArr[i] + "</option>");
+                        }
+                    </script>
+                </select>
+                <select name="province" id="province" οnchange="getCity()">
+                    <option value="">省份</option>
+                    <!-- 利用js把省份添加到下拉列表里-->
+                    <script type="text/javascript">
+                        for (var i = 0; i < provinceArr.length; i++) {
+                            document.write("<option value='" + i + "'>" + provinceArr[i] + "</option>");
+                        }
+                    </script>
+                </select>
+                <select name="province" id="quyu" οnchange="getCity()">
+                    <option value="">区域</option>
+                    <!-- 利用js把省份添加到下拉列表里-->
+                    <script type="text/javascript">
+                        for (var i = 0; i < provinceArr.length; i++) {
+                            document.write("<option value='" + i + "'>" + provinceArr[i] + "</option>");
+                        }
+                    </script>
+                </select>
+
+
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td>验证码</td>
+            <td>
+                <div id="code_box">Af3D</div>
+                <script>
+                    var code_box = document.getElementById("code_box");
+
+                    function refreshCode() {
+
+                        //62个字符 随机选择4位
+                        var code = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM',
+                            char = '',
+                            result = '';
+
+                        for (var i = 0; i < 4; i++) {
+
+                            //随机选择一位  （0,61） 写出0到61的随机的索引数字
+                            var code_index = Math.round(Math.random() * 61);
+                            //得到随机的索引  取出随机地字符
+                            var char = code[code_index];
+                            //随机取出的字符 存在几个相同重复的问题 ，而且对于字母，不能区分大小写。
+                            // 避免重复的思路是：取出字符之后,和最后的result对比一下，看看里边是不是已经存在了，如果存在本次循环就终止，进行下一次
+                            if (result.toUpperCase().indexOf(char.toUpperCase()) > -1)
+                            //indexOf() == -1 说明结果里边没有要找的字符 那么 > -1 就是 里边有重复的字符
+                            {
+                                i--;
+                                //为什么会 --？ 因为如果条件成立，那么本轮循环就结束进行下一轮循环（自然i就加1了），那么本轮本应该取出的字符就没有了
+                                //到最后会少一个字符 缺席
+                                continue;//终止本轮循环 进行下一轮
+                            }
+                            result += char;
+                        }
+                        code_box.innerHTML = result;
+                    }
+
+                    //点击事件
+                    code_box.onclick = refreshCode;
+                </script>
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td></td>
+            <td>
+                <input type="submit" value="立即注册">
+            </td>
+        </tr>
+        <tr> <!-- table_row-->
+            <td></td>
+            <td>
+                <input type="checkbox" name="code" value="请阅读"/>请阅读
+            </td>
+        </tr>
+
+
+    </table>
+</form>
+</body>
+</html>
