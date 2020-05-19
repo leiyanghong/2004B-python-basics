@@ -18,10 +18,24 @@
             -webkit-user-select: none; /*禁止用户选中文字*/
         }
     </style>
-</head>
-<body>
-<form name="reg_testdate" action="http://localhost/signup" method="get">
-    <table border="1"> <!-- 定义表单属性-->
+    <style>
+        table{
+            width:200px;
+            height: 200px;
+            /* 以下属性垂直居中 */
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            background-color: #aaa;
+        }
+    </style>
+</head >
+<body bgcolor="#E6E6FA">
+<form name="reg_testdate" action="http://localhost/signup" method="get" >
+    <table border="1" bgcolor="aqua" > <!-- 定义表单属性-->
         <tr> <!-- table_row-->
             <td>账号邮箱</td>
             <td>
@@ -223,7 +237,7 @@
         <tr> <!-- table_row-->
             <td></td>
             <td>
-                <input type="checkbox" name="code" value="请阅读"/>请阅读
+                <input type="checkbox" name="code" value="请阅读"/>我已阅读并同意相关服务条款和隐私政策
             </td>
         </tr>
 
