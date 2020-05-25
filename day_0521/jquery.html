@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src=./main.js></script>
+    <script>
+
+    </script>
+</head>
+<body>
+    <!-- 给文本输入框添加一个元素改变事件，并把value属性的值传递过去 -->
+     <input type="text" value="hello" id="btni">
+    <script>
+        //// 通过jquery选择器 $() 获取jquery对象 获取input属性的value值用val()方法
+        // alert($("input").val());
+        ////jquery对象转成dom对象
+        // alert($("input")[0].value);
+        ////返回带有指定标签名的对象的集合
+        el = document.getElementsByTagName("input")[0];
+        //将dom对象转换成jquery对象
+        alert($(el).val())
+    </script>
+</body>
+</html>

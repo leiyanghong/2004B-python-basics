@@ -82,26 +82,16 @@
             display: block;
         }
     </style>
+    <script type="text/javascript" src=./main.js></script>
     <script>
-        function menu_action(index) {
-            els = document.getElementsByClassName("tabtitle");
-            for (i in els) {
-                if (i == index) {
-                    els[i].className = "tabtitle active"
-                } else {
-                    els[i].className = "tabtitle"
-                }
-            }
-            els = document.getElementsByClassName("product");
-            for (j in els) {
-                if (j == index) {
-                    els[j].className = "product show"
-                } else {
-                    els[j].className = "product"
-                }
-            }
-
-        }
+        $(function () {
+            $('#tab li').click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+                var index=$(this).index();
+                console.log(index);
+                $('#products div').eq(index).addClass('show').siblings().removeClass()
+            })
+        })
 
     </script>
 </head>
